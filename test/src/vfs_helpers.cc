@@ -61,6 +61,9 @@ std::vector<std::unique_ptr<SupportedFs>> vfs_test_get_fs_vec() {
   SupportedFsLocal* local_fs = new SupportedFsLocal();
   fs_vec.emplace_back(local_fs);
 
+  SupportedFsMem* mem_fs = new SupportedFsMem();
+  fs_vec.emplace_back(mem_fs);
+
   return fs_vec;
 }
 
@@ -271,6 +274,29 @@ std::string SupportedFsLocal::file_prefix() {
 }
 
 #endif
+
+Status SupportedFsMem::prepare_config(
+    tiledb_config_t* config, tiledb_error_t* error) {
+  (void)config;
+  (void)error;
+  return Status::Ok();
+}
+
+Status SupportedFsMem::init(tiledb_ctx_t* ctx, tiledb_vfs_t* vfs) {
+  (void)ctx;
+  (void)vfs;
+  return Status::Ok();
+}
+
+Status SupportedFsMem::close(tiledb_ctx_t* ctx, tiledb_vfs_t* vfs) {
+  (void)ctx;
+  (void)vfs;
+  return Status::Ok();
+}
+
+std::string SupportedFsMem::temp_dir() {
+  return temp_dir_;
+}
 
 }  // End of namespace test
 
