@@ -153,6 +153,7 @@ class SupportedFsS3 : public SupportedFs {
    * filesystem's configuration
    *
    * @param config Configuration parameters
+   * @param error Error parameter
    * @return Status OK if successful
    */
   virtual Status prepare_config(tiledb_config_t* config, tiledb_error_t* error);
@@ -217,6 +218,7 @@ class SupportedFsHDFS : public SupportedFs {
    * No-op
    *
    * @param config Configuration parameters
+   * @param error Error parameter
    * @return Status OK if successful
    */
   virtual Status prepare_config(tiledb_config_t* config, tiledb_error_t* error);
@@ -278,6 +280,7 @@ class SupportedFsAzure : public SupportedFs {
    * filesystem's configuration
    *
    * @param config Configuration parameters
+   * @param error Error parameter
    * @return Status OK if successful
    */
   virtual Status prepare_config(tiledb_config_t* config, tiledb_error_t* error);
@@ -350,6 +353,7 @@ class SupportedFsLocal : public SupportedFs {
    * No-op
    *
    * @param config Configuration parameters
+   * @param error Error parameter
    * @return Status OK if successful
    */
   virtual Status prepare_config(tiledb_config_t* config, tiledb_error_t* error);
