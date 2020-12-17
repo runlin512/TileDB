@@ -3318,18 +3318,16 @@ Status Reader::add_extra_offset() {
     }
 
     auto buffer = static_cast<unsigned char*>(it.second.buffer_);
+    uint64_t bytesize = offsets_bytesize();
     if (offsets_format_mode_ == "bytes") {
-      memcpy(
-          buffer + *it.second.buffer_size_,
-          it.second.buffer_var_size_,
-          constants::cell_var_offset_size);
+      auto buffer_var_size =
+          reinterpret_cast<unsigned char*>(it.second.buffer_var_size_);
+      memcpy(buffer + *it.second.buffer_size_, buffer_var_size, bytesize);
     } else if (offsets_format_mode_ == "elements") {
       auto elements = *it.second.buffer_var_size_ /
                       datatype_size(array_schema_->type(name));
-      memcpy(
-          buffer + *it.second.buffer_size_,
-          &elements,
-          constants::cell_var_offset_size);
+      auto elements_size = reinterpret_cast<unsigned char*>(&elements);
+      memcpy(buffer + *it.second.buffer_size_, elements_size, bytesize);
     } else {
       return LOG_STATUS(Status::ReaderError(
           "Cannot add extra offset to buffer; Unsupported offsets format"));
